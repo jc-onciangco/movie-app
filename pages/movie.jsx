@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import MainLayout from '../layout/MainLayout'
 import FilterSort from '../components/FilterSort'
 import Shows from '../components/Shows'
@@ -7,10 +7,14 @@ import {useFilterGenreState, useSortState} from '../store/useStore'
 function Movie() {
   const resetFilter = useFilterGenreState(state => state.resetFilter)
   const resetSort = useSortState(state => state.resetSort)
-
-  resetFilter()
-  resetSort()
   
+  useEffect(() => {
+    return () => {
+      resetFilter()
+      resetSort()
+    }
+  }, [resetFilter, resetSort])
+
   return (
     <MainLayout>
         <main className="w-full px-2 md:px-4 py-10">

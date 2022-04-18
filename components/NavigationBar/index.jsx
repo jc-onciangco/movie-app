@@ -8,8 +8,8 @@ function NavigationBar() {
     ]
 
   return (
-    <nav className="bg-red-100 px-2 md:px-4">
-        <div className="flex items-center justify-between h-[8vh] max-w-[1380px] mx-auto bg-red-400">
+    <nav className="bg-gradient-to-r from-cyan-500 to-cyan-400 text-white px-2 md:px-4">
+        <div className="flex items-center justify-between h-[8vh] max-w-[1380px] mx-auto">
 
             <div className="flex items-center gap-8">
                 <div className="logo text-xl font-bold">SHOWFLIX</div>
@@ -32,7 +32,9 @@ function NavigationBar() {
 
             <div className="search">
                 <div className="search-icon">
-                    Seacrh
+                    <Link href="/search">
+                        <a>Search</a>
+                    </Link>
                 </div>
             </div>
 
