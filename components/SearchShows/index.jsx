@@ -3,6 +3,7 @@ import {useQuery} from 'react-query'
 import {getSearchShowsApi} from '../../api/api'
 import Poster from '../Poster'
 import Loading from '../Loading'
+import Pagination from '../Pagination'
 
 function SearchShows() {
   const inputRef = useRef()
@@ -22,15 +23,19 @@ function SearchShows() {
       {enabled: false}
   )
 
+  const refetchData = () => {
+    setTimeout(() => {
+      refetch()
+    }, 100)
+  }
+
   const handleSearchShows = () => {
     const value = inputRef.current.value.trim().toLowerCase()
     if (value==='') return
     setIsSearchingStart(true)
     setQuery(value)
 
-    setTimeout(() => {
-      refetch()
-    }, 100)
+    refetchData()
   }
 
   const handleClickEnter = (e) => {
@@ -43,10 +48,33 @@ function SearchShows() {
       setIsSearchingStart(true)
       setQuery(value)
 
-      setTimeout(() => {
-        refetch()
-      }, 100)
+      refetchData()
     }
+  }
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const handlePaginate = (paginate) => {
+
+      if (paginate === 'next') {
+              setPage(prevState => prevState+=1)
+      }
+
+      if (paginate === 'prev') {
+          setPage(prevState => {
+              if (prevState === 1) return
+              return prevState -= 1
+          })
+      }
+
+      refetchData()
+      scrollToTop()
+  }
+
+  const handleJumpToPage = page => {
+      setPage(page)
+      scrollToTop()
+      refetchData()
   }
 
   return (
@@ -59,7 +87,7 @@ function SearchShows() {
             setType={setType}
             handleSearchShows={handleSearchShows}
             handleClickEnter={handleClickEnter}
-            refetch={refetch}
+            refetchData={refetchData}
           />
         </section>
 
@@ -90,6 +118,12 @@ function SearchShows() {
                           })
                       }
                     </ul>
+                    <Pagination 
+                        handlePaginate={handlePaginate} 
+                        handleJumpToPage={handleJumpToPage}
+                        page={page} 
+                        data={{...data, total_pages: data.total_pages<500? data.total_pages : 500}}
+                    />
                   </>) :
                   <Loading gridClass={"grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"}/>
                 )
@@ -103,13 +137,11 @@ function SearchShows() {
   )
 }
 
-const SearchInput = ({inputRef, type, setType, handleSearchShows,handleClickEnter, refetch}) => {
+const SearchInput = ({inputRef, type, setType, handleSearchShows,handleClickEnter, refetchData}) => {
 
   const handleSetType = (type) => {
     setType(type)
-    setTimeout(() => {
-      refetch()
-    }, 100)
+    refetchData()
   }
 
   return (

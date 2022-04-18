@@ -4,6 +4,8 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import {useSortState} from '../../store/useStore'
 import {sortingOptionsMovie, sortingOptionsTv} from './constant'
 import {useRouter} from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 const SortSection = () => {
     const router = useRouter()
     const query = router.pathname.replace('/', '')
@@ -22,14 +24,18 @@ const SortSection = () => {
         <div className="relative selector">
             <div 
                 onClick={() => setIsOptionsOpen(true)}
-                className={`flex cursor-pointer bg-cyan-100 rounded-md ${isOptionsOpen? 'ring-2 ring-cyan-300' : 'ring-0'}`}
+                className={`flex cursor-pointer bg-slate-200 rounded-md ${isOptionsOpen? 'ring-2 ring-cyan-300' : 'ring-0'}`}
                 >
-                <div className="selected-option flex-1 py-2 px-2 capitalize font-semibold text-black/60">
+                <div className="selected-option flex-1 py-2 px-2 capitalize font-semibold text-black/60 truncate">
                     {
                         sortingOptions.find(sortingOption => sortingOption.slug === currentSort).name
                     }
                 </div>
-                <div className="caret py-2 px-4 bg-cyan-400 rounded-r-md">v</div>
+                <div className="caret py-2 px-4 bg-cyan-400 rounded-r-md">
+                        <div className="icon-container h-[1rem] aspect-square">
+                            <FontAwesomeIcon icon={faCaretDown} width="100%" />
+                        </div>
+                </div>
             </div>
 
             <OutsideClickHandler onOutsideClick={() => setIsOptionsOpen(false)}>
@@ -41,7 +47,7 @@ const SortSection = () => {
                                     <li 
                                         onClick={() => handleSelectOption(sortingOption.slug)}
                                         key={sortingOption.id} 
-                                        className="option text-sm py-3 px-4 capitalize cursor-pointer hover:bg-cyan-50"
+                                        className="option text-sm py-3 px-4 capitalize cursor-pointer hover:bg-slate-100"
                                     >
                                             {sortingOption.name}
                                     </li>

@@ -13,8 +13,14 @@ const useSortState = create(set => ({
     resetSort: () => set(state => ({ currentSort: "popularity.desc"  })),
 }))
 
+const useShowFilterState = create(set => ({
+  isFilterShow: false,
+  toggleFilterShow: () => set(state => ({ isFilterShow: !state.isFilterShow  }))
+}))
+
 
 export {
     useFilterGenreState,
-    useSortState
+    useSortState,
+    useShowFilterState
 }
