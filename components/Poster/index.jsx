@@ -1,13 +1,26 @@
-import React from 'react'
+import React , {useState, useEffect} from 'react'
+import {useRouter} from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
+import ProgressCircle from '../ProgressCircle'
+import moment from 'moment'
 
 const Poster = ({result}) => {
+    const router = useRouter()
+    const type = router.pathname.replace('/', '')
+    const [data, setData] = useState(result)
+
+    useEffect(() => {
+        return () => {
+            setData([])
+        }
+    }, [])
+
     return (
         <li className="bg-white shadow-md rounded-md">
             <div className="relative aspect-[1/1.5] img-container rounded-t-md overflow-hidden">
                 {
-                    result.poster_path?
+                    data.poster_path?
                     <Image 
                         src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
                         blurDataURL={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
@@ -24,10 +37,20 @@ const Poster = ({result}) => {
                     </div>
                 }
             </div>
-            <div className="details p-2">
-                <Link href={`/movie/${result.id}`}>
-                    <a className="title leading-tight text-sm font-bold hover:text-cyan-500 transition-all">{result.title || result.name}</a>
+            <div className="details relative">
+            <div className="absolute top-0 right-1 -translate-y-2/4">
+                <ProgressCircle value={result.vote_average} />
+            </div>
+            <div className="data w-full h-full pb-3 pt-6 px-3">
+                <Link href={`/${type}/${result.id}`}>
+                    <a className="block title leading-tight text-sm font-bold hover:text-cyan-500 transition-all">{result.title || result.name}</a>
                 </Link>
+                <div className="date-release text-sm font-semibold text-slate-500/70">
+                    {
+                        moment(result.release_date || result.first_air_date).format('LL') 
+                    }
+                </div>
+            </div>
             </div>
         </li>
     )

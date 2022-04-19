@@ -5,6 +5,7 @@ import SearchShows from '../components/SearchShows'
 function Search() {
   return (
     <MainLayout>
+        <div className="h-[8vh]"></div>
         <main className="w-full px-2 md:px-4 py-8">
             <div className="max-w-[1150px] mx-auto h-full flex">
                 <SearchShows /> 

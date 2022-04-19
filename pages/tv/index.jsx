@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
-import MainLayout from '../layout/MainLayout'
-import FilterSort from '../components/FilterSort'
-import Shows from '../components/Shows'
-import {useFilterGenreState, useSortState} from '../store/useStore'
+import MainLayout from '../../layout/MainLayout'
+import FilterSort from '../../components/FilterSort'
+import Shows from '../../components/Shows'
+import {useFilterGenreState, useSortState} from '../../store/useStore'
 function Tv() {
   const resetFilter = useFilterGenreState(state => state.resetFilter)
   const resetSort = useSortState(state => state.resetSort)
@@ -17,8 +17,9 @@ function Tv() {
 
   return (
     <MainLayout>
-        <main className="w-full px-2 md:px-4 py-10">
-            <div className="max-w-[1380px] mx-auto h-full flex">
+        <div className="h-[8vh]"></div>
+        <main className="w-full px-2 md:px-4 py-6 md:py-10">
+            <div className="max-w-[1380px] mx-auto h-full flex px-2 sm:px-4 md:px-0">
 
                 <FilterSort />
 

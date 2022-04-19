@@ -15,12 +15,18 @@ const useSortState = create(set => ({
 
 const useShowFilterState = create(set => ({
   isFilterShow: false,
-  toggleFilterShow: () => set(state => ({ isFilterShow: !state.isFilterShow  }))
+  toggleFilterShow: () => set(state => ({ isFilterShow: !state.isFilterShow  })),
+  setFalseFilterShow: () => set(state => ({ isFilterShow: false }))
 }))
 
+const useModalState = create(set => ({
+  isModalShow: false,
+  toggleModalShow: () => set(state => ({ isModalShow: !state.isModalShow  }))
+}))
 
 export {
     useFilterGenreState,
     useSortState,
-    useShowFilterState
+    useShowFilterState,
+    useModalState
 }

@@ -13,11 +13,31 @@ function Shows() {
     const router = useRouter()
     const type = router.pathname.replace('/', '')
     const [page, setPage] = useState(1)
+    const [innerWidth, setInnerWidth] = useState(null)
 
     const genres = useFilterGenreState(state => state.genres).join(',')
     const currentSort = useSortState(state => state.currentSort)
     const isFilterShow = useShowFilterState(state => state.isFilterShow)
     const toggleFilterShow = useShowFilterState(state => state.toggleFilterShow)
+    const setFalseFilterShow = useShowFilterState(state => state.setFalseFilterShow)
+
+    const getWidth = () => {
+        const width = window.innerWidth
+        setInnerWidth(width)
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', getWidth)
+        return () => {
+            window.removeEventListener('resize', getWidth)
+        }
+    }, [innerWidth])
+
+    useEffect(() => {
+        if (innerWidth > 767) {
+            setFalseFilterShow()
+        }
+    }, [innerWidth, setFalseFilterShow])
 
     const {
         isLoading,
@@ -52,7 +72,7 @@ function Shows() {
     }
 
     return (
-        <div className={`${isFilterShow? 'hidden' : 'block'} flex-1`}>
+        <div className={`${(isFilterShow)? 'hidden' : 'block'} flex-1`}>
             <div className="title font-bold pb-2 flex justify-between items-center">
                 <div className="label text-2xl">
                     <span className="capitalize">{type}</span> 
