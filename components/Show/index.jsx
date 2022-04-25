@@ -156,8 +156,14 @@ function Show({show}) {
                         </InfoContainer>
 
                         <div className="py-10">
-                            <RecommendationsAndSimilar show={show.recommendations} title={'Recommendations'} />
-                            <RecommendationsAndSimilar show={show.similar} title={'Similar'} />
+                            {
+                                !show.recommendations.results.length || 
+                                <RecommendationsAndSimilar show={show.recommendations} title={'Recommendations'} />
+                            }
+                            {
+                                !show.similar.results.length || 
+                                <RecommendationsAndSimilar show={show.similar} title={'Similar'} />
+                            }
                         </div>
 
                     </div>
