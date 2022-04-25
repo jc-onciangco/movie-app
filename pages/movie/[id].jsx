@@ -33,8 +33,6 @@ export const getServerSideProps = async (context) => {
     const {params} = context
     const {id} = params
 
-    console.log(context)
-
     const res = await fetch(`${BASE_URL}movie/${id}?append_to_response=videos,images,credits,recommendations,similar,external_ids&api_key=${API_KEY}`)
     const movie = await res.json()
  

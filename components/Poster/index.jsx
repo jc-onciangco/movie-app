@@ -5,9 +5,10 @@ import Link from 'next/link'
 import ProgressCircle from '../ProgressCircle'
 import moment from 'moment'
 
-const Poster = ({result}) => {
+const Poster = ({result, showType = null}) => {
     const router = useRouter()
-    const type = router.pathname.replace('/', '')
+    const pathname = router.pathname.replace('/', '')
+    const type = pathname==='search'? showType : pathname
     const [data, setData] = useState(result)
 
     useEffect(() => {

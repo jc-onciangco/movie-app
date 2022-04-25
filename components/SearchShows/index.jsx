@@ -113,6 +113,7 @@ function SearchShows() {
                                   <Poster 
                                       key={result.id} 
                                       result={result} 
+                                      showType={type}
                                   />
                               )
                           })
